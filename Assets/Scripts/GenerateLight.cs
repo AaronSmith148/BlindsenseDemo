@@ -11,6 +11,7 @@ public class GenerateLight : MonoBehaviour
     public float lightRange = 1f;
     public float timer = 5f;
     public float lightHoldTime = 1f;
+    public GameObject[] enemies;
 
     //internal class variables
     private bool lightCreated = false;
@@ -21,9 +22,15 @@ public class GenerateLight : MonoBehaviour
     {
         if (gameObject.tag == "ConstantSound")
         {
-            Instantiate(lightSource, gameObject.transform.position, Quaternion.identity);
-            lightSource.transform.localScale += new Vector3(lightRange, lightRange, lightRange);
+            lightBall = Instantiate(lightSource, gameObject.transform.position, Quaternion.identity);
+            lightBall.transform.localScale += new Vector3(lightRange, lightRange, lightRange);
             lightCreated = true;
+        }
+        enemies = GameObject.FindGameObjectsWithTag("Enemy");
+
+        foreach (GameObject enemy in enemies)
+        {
+            Physics.IgnoreCollision(enemy.GetComponent<Collider>(), GetComponent<Collider>());
         }
         
     }
@@ -32,7 +39,7 @@ public class GenerateLight : MonoBehaviour
     {
         if (gameObject.tag == "ConstantSound")
         {
-            lightSource.transform.position = transform.position;
+            lightBall.transform.position = transform.position;
         }
     }
 
@@ -49,6 +56,7 @@ public class GenerateLight : MonoBehaviour
 
     IEnumerator LightSequence()
     {
+        
         yield return StartCoroutine(CreateLight());
         yield return new WaitForSeconds(lightHoldTime);
         yield return StartCoroutine(ScaleLight());
@@ -66,7 +74,7 @@ public class GenerateLight : MonoBehaviour
     {
         //create light source and set its initial size
         lightBall = Instantiate(lightSource, gameObject.transform.position, Quaternion.identity);
-        lightBall.transform.localScale += new Vector3(lightRange, lightRange, lightRange);
+        lightBall.transform.localScale = new Vector3(lightRange, lightRange, lightRange);
         lightBall.GetComponentInChildren<Light>().range = lightRange / 2;
         lightCreated = true;
         yield return null;
@@ -81,7 +89,7 @@ public class GenerateLight : MonoBehaviour
         while (currentTimer >= 0)
         {
             currentScale = lightRange * (currentTimer / timer);
-            lightBall.transform.localScale += new Vector3(currentScale, currentScale, currentScale);
+            lightBall.transform.localScale = new Vector3(currentScale, currentScale, currentScale);
             lightBall.GetComponentInChildren<Light>().range = currentScale / 2;
             currentTimer -= Time.deltaTime;
         }

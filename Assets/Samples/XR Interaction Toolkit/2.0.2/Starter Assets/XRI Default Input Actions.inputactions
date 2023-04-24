@@ -1092,7 +1092,7 @@
                 {
                     "name": "",
                     "id": "3b1b25b4-0a93-4f1a-a428-7aaf4b4c18cc",
-                    "path": "<OpenVROculusTouchController>/primaryButton",
+                    "path": "<XRController>{RightHand}/primaryButton",
                     "interactions": "",
                     "processors": "",
                     "groups": "Generic XR Controller",

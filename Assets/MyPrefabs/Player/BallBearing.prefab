@@ -17,7 +17,7 @@ GameObject:
   - component: {fileID: 7711191007147776069}
   m_Layer: 0
   m_Name: BallBearing
-  m_TagString: Untagged
+  m_TagString: PlayerObjects
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -30,7 +30,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3076508968784584612}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 472.47525, y: 2.3167086, z: 648.21265}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -115,9 +115,10 @@ MonoBehaviour:
   collisonAudioSource: {fileID: 7482211374579344740}
   lightSource: {fileID: 7249611974097993482, guid: f9fd3eaaa9176c24aa09a85bd4e058f0,
     type: 3}
-  lightRange: 0.5
+  lightRange: 3
   timer: 2
   lightHoldTime: 1
+  enemies: []
 --- !u!82 &7482211374579344740
 AudioSource:
   m_ObjectHideFlags: 0

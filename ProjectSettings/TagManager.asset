@@ -9,6 +9,9 @@ TagManager:
   - Fade
   - SoundSource
   - ConstantSound
+  - Level1End
+  - PlayerObjects
+  - Enemy
   layers:
   - Default
   - TransparentFX

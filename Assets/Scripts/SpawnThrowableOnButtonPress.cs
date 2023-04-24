@@ -5,14 +5,13 @@ using UnityEngine.InputSystem;
 
 public class SpawnThrowableOnButtonPress : MonoBehaviour
 {
-    public InputActionReference throwReference = null;
+    public InputActionReference throwReference;
     public GameObject throwablePrefab;
     public float throwSpeed = 1f;
     
     // Update is called once per frame
     void Update()
     {
-        
         throwReference.action.performed += SpawnThrowable;
     }
 

@@ -7,20 +7,26 @@ using UnityEngine.SceneManagement;
 public class EnemyMovement : MonoBehaviour
 {
     public float speed = .5f;
+    public Transform target;
     public Vector3 targetLocation;
     bool isMoving = false;
     public GameObject lightSource;
     private GameObject lightBall;
+    private Animator animator;
 
+    private void Start()
+    {
+        animator = GetComponent<Animator>();
+    }
     void Update()
     {
-        
         if (isMoving)
         {
             Move();
         }
         if(transform.position.x == targetLocation.x && transform.position.z == targetLocation.z)
         {
+            animator.SetBool("IsRunning", false);
             isMoving = false;
             DisableLights();
         }
@@ -28,6 +34,7 @@ public class EnemyMovement : MonoBehaviour
 
     private void Move()
     {
+        
         transform.position = Vector3.MoveTowards(transform.position, targetLocation, speed * Time.deltaTime);
         lightBall.transform.position = transform.position;
     }
@@ -36,22 +43,18 @@ public class EnemyMovement : MonoBehaviour
     {
         if(triggerCollider.tag == "SoundSource")
         {
-            targetLocation = triggerCollider.transform.position;
-            targetLocation.y += 1;
-            isMoving = true;
+            target = triggerCollider.transform;
+            targetLocation = target.position;
+
+            StartCoroutine(AnimationPlay());
             EnableLights();
-        }
-        if (triggerCollider.tag == "Player")
-        {
-            Debug.Log("Trigger Player");
-            SceneManager.LoadScene("End Screen");
+            StartCoroutine(LookAtTarget(target));
         }
     }
 
     private void EnableLights()
     {
         lightBall = Instantiate(lightSource, new Vector3(0, 0, 0), Quaternion.identity);
-        lightBall.transform.localScale += new Vector3(1, 1, 1);
         lightBall.tag = "Untagged";
     }
     private void DisableLights()
@@ -66,5 +69,29 @@ public class EnemyMovement : MonoBehaviour
             Debug.Log("Collision Player");
             SceneManager.LoadScene("End Screen");
         }
+    }
+
+    private IEnumerator LookAtTarget(Transform target)
+    {
+        Quaternion rotation = Quaternion.LookRotation(target.position - transform.position);
+        //rotation = Quaternion.Euler(transform.rotation.eulerAngles.x, rotation.eulerAngles.y, transform.rotation.eulerAngles.z);
+        float time = 0;
+        float lookSpeed = 1f;
+        while (time < 1)
+        {
+            transform.rotation = Quaternion.Slerp(transform.rotation, rotation, time);
+            time += Time.deltaTime * lookSpeed;
+            yield return null;
+        }
+        
+    }
+
+    private IEnumerator AnimationPlay()
+    {
+        animator.SetBool("IsAlerted", true);
+        yield return new WaitForSeconds(animator.GetCurrentAnimatorStateInfo(0).length + animator.GetCurrentAnimatorStateInfo(0).normalizedTime);
+        animator.SetBool("IsAlerted", false);
+        animator.SetBool("IsRunning", true);
+        isMoving = true;
     }
 }
