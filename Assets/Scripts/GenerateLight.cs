@@ -26,12 +26,6 @@ public class GenerateLight : MonoBehaviour
             lightBall.transform.localScale += new Vector3(lightRange, lightRange, lightRange);
             lightCreated = true;
         }
-        enemies = GameObject.FindGameObjectsWithTag("Enemy");
-
-        foreach (GameObject enemy in enemies)
-        {
-            Physics.IgnoreCollision(enemy.GetComponent<Collider>(), GetComponent<Collider>());
-        }
         
     }
 
@@ -67,6 +61,7 @@ public class GenerateLight : MonoBehaviour
     private void CollisionSound()
     {
         //play collision audio on collision
+        collisonAudioSource.pitch = UnityEngine.Random.Range(0.95f, 1.05f);
         collisonAudioSource.Play();
     }
 

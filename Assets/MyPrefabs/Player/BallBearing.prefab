@@ -94,7 +94,7 @@ SphereCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3076508968784584612}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: e654b37fdb1572b448b120296457ac63, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
@@ -128,7 +128,8 @@ AudioSource:
   m_GameObject: {fileID: 3076508968784584612}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: -2204043461006865815, guid: 840f5fcb2999482468c9ccd641f02c8c,
+    type: 2}
   m_audioClip: {fileID: 8300000, guid: f782b9a1352c8e54f89c9aabcba7f951, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1

@@ -12,6 +12,7 @@ TagManager:
   - Level1End
   - PlayerObjects
   - Enemy
+  - Hands
   layers:
   - Default
   - TransparentFX

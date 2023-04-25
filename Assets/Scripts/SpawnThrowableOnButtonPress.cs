@@ -5,21 +5,23 @@ using UnityEngine.InputSystem;
 
 public class SpawnThrowableOnButtonPress : MonoBehaviour
 {
-    public InputActionReference throwReference;
-    public GameObject throwablePrefab;
     public float throwSpeed = 1f;
-    
-    // Update is called once per frame
-    void Update()
+    GameObject ballInstance;
+
+    public void SpawnThrowable(GameObject throwablePrefab)
     {
-        throwReference.action.performed += SpawnThrowable;
+       
+        
+        ballInstance = Instantiate(throwablePrefab, gameObject.transform.position, gameObject.transform.rotation);
+        Physics.IgnoreCollision(ballInstance.GetComponent<Collider>(), GetComponent<Collider>());
+        ballInstance.GetComponent<Rigidbody>().velocity = transform.TransformDirection(Vector3.forward * throwSpeed);
+        StartCoroutine(DestroyBall());
     }
 
-    private void SpawnThrowable(InputAction.CallbackContext context)
+    IEnumerator DestroyBall()
     {
-        GameObject ballInstance = Instantiate(throwablePrefab);
-        Vector3 direction = Vector3.forward;
-        Vector3 velocity = throwSpeed * direction;
-        ballInstance.GetComponent<Rigidbody>().velocity = velocity;
+        yield return new WaitForSeconds(8);
+        Destroy(ballInstance);
+        ballInstance = null;
     }
 }

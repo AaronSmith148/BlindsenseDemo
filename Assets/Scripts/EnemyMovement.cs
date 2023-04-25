@@ -13,10 +13,12 @@ public class EnemyMovement : MonoBehaviour
     public GameObject lightSource;
     private GameObject lightBall;
     private Animator animator;
+    private AudioSource alertSound;
 
     private void Start()
     {
         animator = GetComponent<Animator>();
+        alertSound = GetComponent<AudioSource>();
     }
     void Update()
     {
@@ -45,9 +47,9 @@ public class EnemyMovement : MonoBehaviour
         {
             target = triggerCollider.transform;
             targetLocation = target.position;
-
-            StartCoroutine(AnimationPlay());
+            alertSound.Play();
             EnableLights();
+            StartCoroutine(AnimationPlay());
             StartCoroutine(LookAtTarget(target));
         }
     }
